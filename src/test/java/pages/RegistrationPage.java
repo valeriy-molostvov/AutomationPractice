@@ -9,7 +9,6 @@ import static com.codeborne.selenide.Selenide.open;
 public class RegistrationPage extends BasePage {
 
     String URL = "http://automationpractice.com/index.php?controller=authentication&back=my-account#account-creation";
-    By REGISTER_BUTTON = By.id("submitAccount");
     By GENDER_MALE = By.id("id_gender1");
     By GENDER_FEMALE = By.id("id_gender2");
     By FIRST_NAME = By.id("customer_firstname");
@@ -36,7 +35,7 @@ public class RegistrationPage extends BasePage {
     }
 
     public RegistrationPage isPageOpened() {
-        $(REGISTER_BUTTON).waitUntil(Condition.visible, 30000);
+        $(PAGE_VALIDATION).waitUntil(Condition.visible, 30000);
         return this;
     }
 
@@ -44,6 +43,7 @@ public class RegistrationPage extends BasePage {
             String first_name, String last_name, String password, int day, int month,
             String year, String address, String city, String state, String zip_code, String country,
             String additional_information, String mobile_phone, String address_alias) {
+        isPageOpened();
         String Ms = "Ms.";
 
         if (!gender.equals(Ms)) {$(GENDER_FEMALE).click();}
@@ -67,6 +67,7 @@ public class RegistrationPage extends BasePage {
     }
 
     public void submitRegistration() {
+        isPageOpened();
         $(SUBMIT_REGISTRATION).click();
     }
 }

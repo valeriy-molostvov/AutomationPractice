@@ -15,4 +15,26 @@ public class AutomationPracticeTest extends BaseTest {
                         "Hate women clothes", "99129045", "Miami Beach")
                 .submitRegistration();
     }
+
+    @Test(retryAnalyzer = RetryAnalyzer.class)
+    public void login() {
+        loginPage
+                .openPage()
+                .loggingToAccount("moodpanda@mailinator.com","12345");
+    }
+    @Test(retryAnalyzer = RetryAnalyzer.class)
+    public void addToCart() {
+     inventoryPage
+             .openPage()
+             .addToCart_1()
+             .addToCart_2()
+             .addToCart_3()
+             .addToCart_4()
+             .addToCart_5()
+             .addToCart_6()
+             .addToCart_7()
+             .proceedToCheckout()
+             .openPage()
+             .deleteFromCart(2,5,4, "100", 1);
+    }
 }
