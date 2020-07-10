@@ -1,25 +1,33 @@
 package pages;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static com.codeborne.selenide.Selenide.*;
 
 public class InventoryPage extends BasePage {
     String URL = "http://automationpractice.com/index.php?id_category=3&controller=category";
-    String ADD_TO_CART_LOCATOR = "//ul[@class='product_list row list']//a[@class='product-name'][contains(text(),'%s') and //div[@class='product-image-container']//span[@class='price product-price'][contains(text(),'%s') and //a[@class='button ajax_add_to_cart_button btn btn-default']]]";
-    String NAME_OF_PRODUCT = "//ul[@class='product_list row list']//a[@class='product-name'][contains(text(),'%s')]";
-    String PRICE_OF_PRODUCT = "//div[@class='product-image-container']//span[@class='price product-price'][contains(text(),'%s')]";
-    By ADD_TO_CART = By.className("button ajax_add_to_cart_button btn btn-default");
-    By ITEM_1 = By.xpath("//li[@class='ajax_block_product first-in-line first-item-of-tablet-line first-item-of-mobile-line col-xs-12']//span[contains(text(),'Add to cart')]");
-    By ITEM_2 = By.xpath("//li[@class='ajax_block_product last-item-of-tablet-line col-xs-12']//span[contains(text(),'Add to cart')]");
-    By ITEM_3 = By.xpath("//li[@class='ajax_block_product last-in-line first-item-of-tablet-line last-item-of-mobile-line col-xs-12']//span[contains(text(),'Add to cart')]");
-    By ITEM_4 = By.xpath("//li[@class='ajax_block_product first-in-line last-item-of-tablet-line first-item-of-mobile-line col-xs-12']//span[contains(text(),'Add to cart')]");
-    By ITEM_5 = By.xpath("//li[@class='ajax_block_product first-item-of-tablet-line col-xs-12']//span[contains(text(),'Add to cart')]");
-    By ITEM_6 = By.xpath("//li[@class='ajax_block_product last-in-line last-item-of-tablet-line last-item-of-mobile-line col-xs-12']//span[contains(text(),'Add to cart')]");
-    By ITEM_7 = By.xpath("//li[@class='ajax_block_product first-in-line last-line first-item-of-tablet-line first-item-of-mobile-line last-mobile-line col-xs-12']//span[contains(text(),'Add to cart')]");
     By SORT_LIST = By.className("icon-th-list");
     By CART_LAYER = By.id("layer_cart");
+    String ITEM_COMPONENT = ".product-container";
+    String ITEM_ADD_TO_CART = ".ajax_add_to_cart_button";
+    String ITEM_NAME = "//a[@class='product-name'][contains(text(),'%s')]";
+    String ITEM_PRICE = "//span[@class='price product-price'][contains(text(),'%s')]";
+    String ITEM_MORE = ".lnk_view";
+    String ITEM_WISHLIST = ".wishlist";
+    String DELETE_ITEM_FROM_CART = ".ajax_cart_block_remove_link";
+    Map<String, ProductComponent> productComponent = new HashMap<>();
+    List<SelenideElement> productComponentRow = $$(ITEM_COMPONENT);
+    List<SelenideElement> productNames = $$(By.xpath(ITEM_NAME));
+    List<SelenideElement> productPrices = $$(By.xpath(ITEM_PRICE));
+    List<SelenideElement> productAddToCart = $$(ITEM_ADD_TO_CART);
+    List<SelenideElement> productMore = $$(ITEM_MORE);
+    List<SelenideElement> productWishlist = $$(ITEM_WISHLIST);
 
     public InventoryPage openPage() {
         open(URL);
@@ -32,59 +40,29 @@ public class InventoryPage extends BasePage {
         return this;
     }
 
-    public InventoryPage addToCart_1() {
-        isPageOpened();
-        $(SORT_LIST).click();
-        $(ITEM_1).click();
-        $(CART_LAYER).waitUntil(Condition.visible, 30000);
-        $(CONTINUE_SHOPPING).click();
-        isPageOpened();
+    public InventoryPage initializeAllProducts() {
+        for (int i = 0; i < $$(productComponentRow).size(); i++) {
+            productComponent.put($$(productNames).get(i).getText(),
+                    new ProductComponent(
+                            productNames.get(i),
+                            productPrices.get(i),
+                            productAddToCart.get(i),
+                            productMore.get(i),
+                            productWishlist.get(i)
+                    ));
+        }
         return this;
     }
 
-    public InventoryPage addToCart_2() {
-        $(ITEM_2).click();
-        $(CART_LAYER).waitUntil(Condition.visible, 30000);
-        $(CONTINUE_SHOPPING).click();
-        isPageOpened();
+    public InventoryPage addToCart(String productName) {
+        productComponent.get(productName).addToCart.click();
         return this;
     }
 
-    public InventoryPage addToCart_3() {
-        $(ITEM_3).click();
+    public InventoryPage continueShopping() {
         $(CART_LAYER).waitUntil(Condition.visible, 30000);
         $(CONTINUE_SHOPPING).click();
         isPageOpened();
-        return this;
-    }
-
-    public InventoryPage addToCart_4() {
-        $(ITEM_4).click();
-        $(CART_LAYER).waitUntil(Condition.visible, 30000);
-        $(CONTINUE_SHOPPING).click();
-        isPageOpened();
-        return this;
-    }
-
-    public InventoryPage addToCart_5() {
-        $(ITEM_5).click();
-        $(CART_LAYER).waitUntil(Condition.visible, 30000);
-        $(CONTINUE_SHOPPING).click();
-        isPageOpened();
-        return this;
-    }
-
-    public InventoryPage addToCart_6() {
-        $(ITEM_6).click();
-        $(CART_LAYER).waitUntil(Condition.visible, 30000);
-        $(CONTINUE_SHOPPING).click();
-        isPageOpened();
-        return this;
-    }
-
-    public InventoryPage addToCart_7() {
-        $(ITEM_7).click();
-        //here is the line for add the item
         return this;
     }
 
@@ -94,5 +72,11 @@ public class InventoryPage extends BasePage {
         CartPage cartPage = new CartPage();
         cartPage.isPageOpened();
         return cartPage;
+    }
+
+    public InventoryPage listViewOfProducts() {
+        isPageOpened();
+        $(SORT_LIST).click();
+        return this;
     }
 }

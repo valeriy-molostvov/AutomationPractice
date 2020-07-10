@@ -43,6 +43,7 @@ public class RegistrationPage extends BasePage {
             String first_name, String last_name, String password, int day, int month,
             String year, String address, String city, String state, String zip_code, String country,
             String additional_information, String mobile_phone, String address_alias) {
+
         isPageOpened();
         String Ms = "Ms.";
 
@@ -50,7 +51,7 @@ public class RegistrationPage extends BasePage {
         else {$(GENDER_MALE).click();}
         $(FIRST_NAME).sendKeys(first_name);
         $(LAST_NAME).sendKeys(last_name);
-        $(PASSWORD).sendKeys(password);
+        $(PASSWORD).setValue(password);
         $(DATE_OF_BIRTH_DAYS).selectOption(day);
         $(DATE_OF_BIRTH_MONTHS).selectOption(month);
         $(DATE_OF_BIRTH_YEARS).selectOptionByValue(year);

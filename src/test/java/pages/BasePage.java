@@ -1,6 +1,7 @@
 package pages;
 
 import org.openqa.selenium.By;
+import utils.BuilderRegistration;
 
 public abstract class BasePage {
     By PAGE_VALIDATION = By.className("icon-map-marker");
@@ -9,5 +10,4 @@ public abstract class BasePage {
     public abstract BasePage openPage();
 
     public abstract BasePage isPageOpened();
-
 }
