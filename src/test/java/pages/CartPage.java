@@ -19,9 +19,9 @@ public class CartPage extends BasePage {
     String OTHER_PAYMENT_METHOD = ".button-exclusive";
     String ORDER_CONFIRMATION = ".box";
     String PROCEED_TO_CHECKOUT_SUMMARY = ".standard-checkout";
-    String PROCEED_TO_CHECKOUT_PAYMENT = "//span[contains(text(),'I confirm my order')]";
     By PROCEED_TO_CHECKOUT_ADDRESS = By.name("processAddress");
     By PROCEED_TO_CHECKOUT_SHIPPING = By.name("processCarrier");
+    By PROCEED_TO_CHECKOUT_PAYMENT = By.xpath("//*[@class='button btn btn-default button-medium']");
 
     public CartPage openPage() {
         open(URL);
@@ -50,11 +50,9 @@ public class CartPage extends BasePage {
         $(PROCEED_TO_CHECKOUT_ADDRESS).click();
         $(TERMS_OF_SERVICE).click();
         $(TERMS_OF_SERVICE).shouldBe(checked);
-        $(PROCEED_TO_CHECKOUT).click();
+        $(PROCEED_TO_CHECKOUT_SHIPPING).click();
         $(PAY_BY_BANK_WIRE).click();
         $(PROCEED_TO_CHECKOUT_PAYMENT).click();
-        $(ORDER_CONFIRMATION).shouldHave(text("Your order on My Store is complete."),
-                text("Amount"));
         return this;
     }
 }
