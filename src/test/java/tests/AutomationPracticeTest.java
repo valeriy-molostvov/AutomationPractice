@@ -29,10 +29,14 @@ public class AutomationPracticeTest extends BaseTest {
                 .openPage()
                 .listViewOfProducts()
                 .initializeAllProducts()
-                .addToWishlist("$30.50")
-                .addToCart("$28.98")
+                .addToCart("Printed Summer Dress $28.98")
+                .continueShopping()
+                .addToCart("Faded Short Sleeve T-shirts $16.51")
+                .continueShopping()
+                .addToCart("Printed Dress $26.00")
                 .proceedToCheckout()
-                .changeQuantity(1, "100");
+                .initializeAllProductsInCart()
+                .setQuantityValue("Printed Summer Dress $28.98", "10");
     }
 
     @Test(retryAnalyzer = RetryAnalyzer.class)
@@ -44,12 +48,14 @@ public class AutomationPracticeTest extends BaseTest {
                 .openPage()
                 .listViewOfProducts()
                 .initializeAllProducts()
-                .addToWishlist("$30.50")
-                .addToCart("$28.98")
+                .addToCart("Blouse $27.00")
+                .continueShopping()
+                .addToCart("Faded Short Sleeve T-shirts $16.51")
+                .continueShopping()
+                .addToCart("Printed Dress $26.00")
                 .proceedToCheckout();
         cartPage
                 .isPageOpened()
-                .changeQuantity(1, "50")
-                .validateCheckoutAndConfirm();
+                .initializeAllProductsInCart();
     }
 }

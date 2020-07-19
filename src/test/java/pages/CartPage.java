@@ -1,18 +1,25 @@
 package pages;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import static com.codeborne.selenide.Condition.checked;
-import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
 
 public class CartPage extends BasePage {
 
     String URL = "http://automationpractice.com/index.php?controller=order";
-    String DELETE_FROM_CART = "//tr[%s]//a[@class='cart_quantity_delete']";
-    String QUANTITY = "//tr[%s]//input[@class='cart_quantity_input form-control grey']";
-    String Price = "#total_price";
+    String CART_ITEM_COMPONENT = ".cart_item";
+    String CART_ITEM_NAME = "//td[@class='cart_product']//img";
+    String CART_ITEM_PRICE = "//span[@class='price']/span[@class='price'] | //span[@class='price']/span[@class='price special-price']";
+    String CART_ITEM_DESCRIPTION = "//td[@class='cart_description']//p[@class='product-name']";
+    String CART_ITEM_QUANTITY = ".cart_quantity_input";
+    String CART_ITEM_DELETE = ".icon-trash";
     String TERMS_OF_SERVICE = "#cgv";
     String PAY_BY_BANK_WIRE = ".bankwire";
     String PAY_BY_CHEQUE = ".cheque";
@@ -22,6 +29,7 @@ public class CartPage extends BasePage {
     By PROCEED_TO_CHECKOUT_ADDRESS = By.name("processAddress");
     By PROCEED_TO_CHECKOUT_SHIPPING = By.name("processCarrier");
     By PROCEED_TO_CHECKOUT_PAYMENT = By.xpath("//*[@class='button btn btn-default button-medium']");
+    Map<String, CartComponent> cartComponent = new HashMap<>();
 
     public CartPage openPage() {
         open(URL);
@@ -33,14 +41,34 @@ public class CartPage extends BasePage {
         $(PAGE_VALIDATION).waitUntil(Condition.visible, 30000);
         return this;
     }
-    public CartPage deleteFromCart(int columnNumberOfProduct) {
-        By deleteFromCart = By.xpath(String.format(DELETE_FROM_CART, columnNumberOfProduct));
-        $(deleteFromCart).shouldBe(Condition.visible).click();
+
+    public CartPage initializeAllProductsInCart() {
+        List<SelenideElement> cartProductsName = $$(By.xpath(CART_ITEM_NAME));
+        List<SelenideElement> cartProductPrices = $$(By.xpath(CART_ITEM_PRICE));
+        List<SelenideElement> cartDescriptions = $$(By.xpath(CART_ITEM_DESCRIPTION));
+        List<SelenideElement> cartQuantities = $$(CART_ITEM_QUANTITY);
+        List<SelenideElement> cartDeletes = $$(CART_ITEM_DELETE);
+        for (int i = 0; i < $$(CART_ITEM_COMPONENT).size(); i++) {
+            cartComponent.put(cartDescriptions.get(i).getText() + " " + cartProductPrices.get(i).getText(),
+                    new CartComponent(
+                            cartDescriptions.get(i),
+                            cartProductsName.get(i),
+                            cartProductPrices.get(i),
+                            cartQuantities.get(i),
+                            cartDeletes.get(i)
+                    ));
+        }
         return this;
     }
-    public CartPage changeQuantity(int columnNumberOfProduct, String quantitySetValue) {
-        By quantityValue = By.xpath(String.format(QUANTITY, columnNumberOfProduct));
-        $(quantityValue).setValue(quantitySetValue);
+
+    public CartPage setQuantityValue(String productNameAndPrice, String setQuantityValue) {
+        cartComponent.get(productNameAndPrice).quantity.setValue(setQuantityValue);
+        return this;
+    }
+
+    public CartPage deleteFromCart(String productNameAndPrice) {
+        cartComponent.get(productNameAndPrice).delete.click();
+        initializeAllProductsInCart();
         return this;
     }
 
@@ -56,3 +84,5 @@ public class CartPage extends BasePage {
         return this;
     }
 }
+//        if (PRICE.equals(SPECIAL_PRICE)) {$(SPECIAL_PRICE).getText();}
+//                else {$(PRICE).getText();}

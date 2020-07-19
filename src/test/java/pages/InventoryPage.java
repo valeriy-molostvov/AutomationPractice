@@ -8,9 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
-import static org.testng.Assert.assertTrue;
 
 public class InventoryPage extends BasePage {
     String URL = "http://automationpractice.com/index.php?id_category=3&controller=category";
@@ -39,16 +37,16 @@ public class InventoryPage extends BasePage {
     }
 
     public InventoryPage initializeAllProducts() {
-        List<SelenideElement> productNames = $$(By.xpath(ITEM_NAME));
-        List<SelenideElement> productPrices = $$(By.xpath(ITEM_PRICE));
+        List<SelenideElement> productsName = $$(By.xpath(ITEM_NAME));
+        List<SelenideElement> productsPrices = $$(By.xpath(ITEM_PRICE));
         List<SelenideElement> productAddToCart = $$(ITEM_ADD_TO_CART);
         List<SelenideElement> productMore = $$(ITEM_MORE);
         List<SelenideElement> productWishlist = $$(ITEM_WISHLIST);
         for (int i = 0; i < $$(ITEM_COMPONENT).size(); i++) {
-            productComponent.put(productPrices.get(i).getText(),
+            productComponent.put(productsName.get(i).getText() + " " + productsPrices.get(i).getText(),
                     new ProductComponent(
-                            productPrices.get(i),
-                            productNames.get(i),
+                            productsPrices.get(i),
+                            productsName.get(i),
                             productAddToCart.get(i),
                             productMore.get(i),
                             productWishlist.get(i)
@@ -57,15 +55,17 @@ public class InventoryPage extends BasePage {
         return this;
     }
 
-    public InventoryPage addToCart(String productPrice) {
-        productComponent.get(productPrice).addToCart.click();
+    public InventoryPage addToCart(String productNameAndPrice) {
+        productComponent.get(productNameAndPrice).addToCart.click();
         return this;
     }
+
     public InventoryPage addToWishlist(String productPrice) {
         productComponent.get(productPrice).addToWishlist.click();
         $(CLOSE_WISHLIST_POP_UP).click();
         return this;
     }
+
     public InventoryPage clickMore(String productPrice) {
         productComponent.get(productPrice).more.click();
         return this;
