@@ -7,6 +7,7 @@ import org.testng.annotations.Listeners;
 import pages.CartPage;
 import pages.InventoryPage;
 import pages.LoginPage;
+import pages.MyWishlistPage;
 
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
@@ -15,6 +16,7 @@ public class BaseTest {
     LoginPage loginPage;
     InventoryPage inventoryPage;
     CartPage cartPage;
+    MyWishlistPage myWishlistPage;
 
     @BeforeMethod(description = "Opening Chrome browser")
 public void setupBrowser() {
@@ -26,6 +28,7 @@ public void setupBrowser() {
     loginPage = new LoginPage();
     inventoryPage = new InventoryPage();
     cartPage = new CartPage();
+    myWishlistPage = new MyWishlistPage();
 }
 
     @AfterMethod(alwaysRun = true)

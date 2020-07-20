@@ -24,7 +24,7 @@ public class AutomationPracticeTest extends BaseTest {
     }
 
     @Test(retryAnalyzer = RetryAnalyzer.class)
-    public void addToCart() {
+    public void addToCartTest() {
         inventoryPage
                 .openPage()
                 .listViewOfProducts()
@@ -56,6 +56,29 @@ public class AutomationPracticeTest extends BaseTest {
                 .proceedToCheckout();
         cartPage
                 .isPageOpened()
-                .initializeAllProductsInCart();
+                .initializeAllProductsInCart()
+                .validateCheckoutAndConfirm();
+    }
+    @Test(retryAnalyzer = RetryAnalyzer.class)
+    public void wishlistTest() {
+        loginPage
+                .openPage()
+                .loggingToAccount("moodpanda@mailinator.com", "12345");
+        inventoryPage
+                .openPage()
+                .listViewOfProducts()
+                .initializeAllProducts()
+                .addToWishlist("Printed Dress $26.00")
+                .addToWishlist("Printed Dress $50.99")
+                .addToWishlist("Printed Summer Dress $28.98")
+                .addToWishlist("Printed Chiffon Dress $16.40");
+        myWishlistPage
+                .openPage()
+                .searchAndAddNewItemByName("Adidas")
+                .searchAndAddNewItemByName("New president")
+                .searchAndAddNewItemByName("Blouse")
+                .deleteFromWishlist("Blouse")
+                .deleteFromWishlist("Adidas")
+                .deleteFromWishlist("My wishlist");
     }
 }
