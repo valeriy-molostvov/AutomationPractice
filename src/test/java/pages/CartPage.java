@@ -12,7 +12,6 @@ import static com.codeborne.selenide.Condition.checked;
 import static com.codeborne.selenide.Selenide.*;
 
 public class CartPage extends BasePage {
-
     String URL = "http://automationpractice.com/index.php?controller=order";
     String CART_ITEM_COMPONENT = ".cart_item";
     String CART_ITEM_NAME = "//td[@class='cart_product']//img";
@@ -55,8 +54,7 @@ public class CartPage extends BasePage {
                             cartProductsName.get(i),
                             cartProductPrices.get(i),
                             cartQuantities.get(i),
-                            cartDeletes.get(i)
-                    ));
+                            cartDeletes.get(i)));
         }
         return this;
     }
@@ -83,6 +81,5 @@ public class CartPage extends BasePage {
         $(PROCEED_TO_CHECKOUT_PAYMENT).click();
         return this;
     }
-}
-//        if (PRICE.equals(SPECIAL_PRICE)) {$(SPECIAL_PRICE).getText();}
+}//        if (PRICE.equals(SPECIAL_PRICE)) {$(SPECIAL_PRICE).getText();}
 //                else {$(PRICE).getText();}

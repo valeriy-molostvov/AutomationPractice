@@ -48,23 +48,26 @@ public class MyWishlistPage extends BasePage {
                             wishlistQuantity.get(i),
                             wishlistCreated.get(i),
                             wishlistDirectLink.get(i),
-                            wishlistDelete.get(i)
-                    ));
+                            wishlistDelete.get(i)));
         }
         return this;
     }
 
-    public MyWishlistPage deleteFromWishlist(String itemName) {
-        wishlistComponent.get(itemName).delete.click();
+    public MyWishlistPage deleteWishlist(String wishlistName) {
+        wishlistComponent.get(wishlistName).delete.click();
         confirm("Do you really want to delete this wishlist ?");
         initializeAllProductsInWishlist();
         return this;
     }
 
-    public MyWishlistPage searchAndAddNewItemByName(String addNewItemToWishlist) {
-        $(SEARCH).sendKeys(addNewItemToWishlist);
+    public MyWishlistPage addNewWishlist(String addNewWishlist) {
+        $(SEARCH).sendKeys(addNewWishlist);
         $(SAVE_BUTTON).click();
         initializeAllProductsInWishlist();
+        return this;
+    }
+    public MyWishlistPage clickOnView(String wishlistName) {
+        wishlistComponent.get(wishlistName).direct_link.click();
         return this;
     }
 }

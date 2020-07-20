@@ -19,17 +19,17 @@ public class BaseTest {
     MyWishlistPage myWishlistPage;
 
     @BeforeMethod(description = "Opening Chrome browser")
-public void setupBrowser() {
-    Configuration.headless = false;
-    Configuration.startMaximized = true;
-    Configuration.timeout = 20000;
-    Configuration.browser = "chrome";
-    Configuration.clickViaJs = false;
-    loginPage = new LoginPage();
-    inventoryPage = new InventoryPage();
-    cartPage = new CartPage();
-    myWishlistPage = new MyWishlistPage();
-}
+    public void setupBrowser() {
+        Configuration.headless = false;
+        Configuration.startMaximized = true;
+        Configuration.timeout = 20000;
+        Configuration.browser = "chrome";
+        Configuration.clickViaJs = false;
+        loginPage = new LoginPage();
+        inventoryPage = new InventoryPage();
+        cartPage = new CartPage();
+        myWishlistPage = new MyWishlistPage();
+    }
 
     @AfterMethod(alwaysRun = true)
     public void closeBrowser() {
