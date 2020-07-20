@@ -14,6 +14,7 @@ import static com.codeborne.selenide.Selenide.$$;
 
 public class MyWishlistPage extends BasePage {
     String URL = "http://automationpractice.com/index.php?fc=module&module=blockwishlist&controller=mywishlist";
+    String WISHLIST_VALIDATION_AFTER_VIEW = ".wishlistLinkTop";
     String SEARCH = "#name";
     String SAVE_BUTTON = "#submitWishlist";
     By ALL_ITEM_WISHLIST = By.xpath("//table[@class='table table-bordered']//tbody/tr");
@@ -65,12 +66,14 @@ public class MyWishlistPage extends BasePage {
     public MyWishlistPage addNewWishlist(String addNewWishlist) {
         $(SEARCH).sendKeys(addNewWishlist);
         $(SAVE_BUTTON).click();
+        isPageOpened();
         initializeAllProductsInWishlist();
         return this;
     }
 
     public MyWishlistPage clickOnView(String wishlistName) {
         wishlistComponent.get(wishlistName).direct_link.click();
+        $(WISHLIST_VALIDATION_AFTER_VIEW).waitUntil(Condition.visible,30000);
         return this;
     }
 
