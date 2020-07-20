@@ -3,6 +3,9 @@ package pages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
+import org.testng.Assert;
+
+import static org.testng.Assert.assertEquals;
 
 import java.util.HashMap;
 import java.util.List;
@@ -81,5 +84,10 @@ public class CartPage extends BasePage {
         $(PROCEED_TO_CHECKOUT_PAYMENT).click();
         return this;
     }
-}//        if (PRICE.equals(SPECIAL_PRICE)) {$(SPECIAL_PRICE).getText();}
-//                else {$(PRICE).getText();}
+
+    public CartPage validateNumberOfProducts(int number) {
+        Assert.assertEquals($$(CART_ITEM_COMPONENT).size(),
+                number, "Number of products is invalid");
+    return this;
+    }
+}

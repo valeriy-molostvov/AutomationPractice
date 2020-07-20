@@ -3,6 +3,7 @@ package pages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +22,7 @@ public class MyWishlistPage extends BasePage {
     String WISHLIST_CREATED = "//td[4]";
     By WISHLIST_DIRECT_LINK = By.partialLinkText("View");
     By WISHLIST_DELETE = By.xpath("//td[@class='wishlist_delete']/a");
+    By VALIDATE_NUMBER_OF_PRODUCTS = By.xpath("//ul[@class='row wlp_bought_list']//div[@class='row']");
     Map<String, WishlistComponent> wishlistComponent = new HashMap<>();
 
     public MyWishlistPage openPage() {
@@ -66,8 +68,15 @@ public class MyWishlistPage extends BasePage {
         initializeAllProductsInWishlist();
         return this;
     }
+
     public MyWishlistPage clickOnView(String wishlistName) {
         wishlistComponent.get(wishlistName).direct_link.click();
+        return this;
+    }
+
+    public MyWishlistPage validateNumberOfProductsInTheView(int number) {
+        Assert.assertEquals($$(VALIDATE_NUMBER_OF_PRODUCTS).size(),
+                number, "Number of products is invalid");
         return this;
     }
 }

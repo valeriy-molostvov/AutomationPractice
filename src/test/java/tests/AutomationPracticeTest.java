@@ -57,6 +57,7 @@ public class AutomationPracticeTest extends BaseTest {
         cartPage
                 .isPageOpened()
                 .initializeAllProductsInCart()
+                .validateNumberOfProducts(3)
                 .validateCheckoutAndConfirm();
     }
 
@@ -80,6 +81,8 @@ public class AutomationPracticeTest extends BaseTest {
                 .addToWishlist("Printed Chiffon Dress $16.40");
         myWishlistPage
                 .openPage()
-                .clickOnView("New WishList");
+                .clickOnView("New WishList")
+                .validateNumberOfProductsInTheView(4)
+                .deleteWishlist("New WishList");
     }
 }
