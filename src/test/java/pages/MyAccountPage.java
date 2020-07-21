@@ -6,7 +6,7 @@ import org.openqa.selenium.By;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
-public class MyAccountPage extends BasePage{
+public class MyAccountPage extends BasePage {
     String URL = "http://automationpractice.com/index.php?controller=my-account";
     By ORDER_HISTORY_AND_DETAILS = By.className("icon-list-ol");
     By MY_WISHLIST = By.className("icon-heart");
@@ -21,6 +21,7 @@ public class MyAccountPage extends BasePage{
         $(PAGE_VALIDATION).waitUntil(Condition.visible, 30000);
         return this;
     }
+
     public OrderHistoryPage goToOrderHistoryAndDetails() {
         isPageOpened();
         $(ORDER_HISTORY_AND_DETAILS).shouldBe(Condition.visible).click();
@@ -28,6 +29,7 @@ public class MyAccountPage extends BasePage{
         orderHistoryPage.isPageOpened();
         return orderHistoryPage;
     }
+
     public MyWishlistPage goToMyWishlistPage() {
         isPageOpened();
         $(MY_WISHLIST).shouldBe(Condition.visible).click();

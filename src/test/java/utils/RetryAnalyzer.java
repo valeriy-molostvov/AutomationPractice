@@ -4,9 +4,8 @@ import org.testng.IRetryAnalyzer;
 import org.testng.ITestResult;
 
 public class RetryAnalyzer implements IRetryAnalyzer {
-
     private int attempt = 1;
-    private static final int MAX_RETRY = 1;
+    private static final int MAX_RETRY = 3;
 
     @Override
     public boolean retry(ITestResult iTestResult) {
@@ -24,5 +23,4 @@ public class RetryAnalyzer implements IRetryAnalyzer {
         }
         return false;
     }
-
 }

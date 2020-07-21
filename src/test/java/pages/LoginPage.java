@@ -6,8 +6,7 @@ import org.openqa.selenium.By;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
-public class LoginPage extends BasePage{
-
+public class LoginPage extends BasePage {
     String URL = "http://automationpractice.com/index.php?controller=authentication&back=my-account";
     By EMAIL_ADDRESS = By.id("email_create");
     By CREATE_ACCOUNT_BUTTON = By.id("SubmitCreate");
@@ -35,7 +34,7 @@ public class LoginPage extends BasePage{
         return registrationPage;
     }
 
-    public MyAccountPage loggingToAccount (String email, String password) {
+    public MyAccountPage loggingToAccount(String email, String password) {
         isPageOpened();
         $(LOGIN).sendKeys(email);
         $(PASSWORD).sendKeys(password);

@@ -49,8 +49,7 @@ public class InventoryPage extends BasePage {
                             productsName.get(i),
                             productAddToCart.get(i),
                             productMore.get(i),
-                            productWishlist.get(i)
-                    ));
+                            productWishlist.get(i)));
         }
         return this;
     }

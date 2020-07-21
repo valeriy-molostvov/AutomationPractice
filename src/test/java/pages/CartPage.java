@@ -3,6 +3,7 @@ package pages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 
 import java.util.HashMap;
 import java.util.List;
@@ -12,7 +13,6 @@ import static com.codeborne.selenide.Condition.checked;
 import static com.codeborne.selenide.Selenide.*;
 
 public class CartPage extends BasePage {
-
     String URL = "http://automationpractice.com/index.php?controller=order";
     String CART_ITEM_COMPONENT = ".cart_item";
     String CART_ITEM_NAME = "//td[@class='cart_product']//img";
@@ -55,8 +55,7 @@ public class CartPage extends BasePage {
                             cartProductsName.get(i),
                             cartProductPrices.get(i),
                             cartQuantities.get(i),
-                            cartDeletes.get(i)
-                    ));
+                            cartDeletes.get(i)));
         }
         return this;
     }
@@ -83,6 +82,10 @@ public class CartPage extends BasePage {
         $(PROCEED_TO_CHECKOUT_PAYMENT).click();
         return this;
     }
+
+    public CartPage validateNumberOfProducts(int number) {
+        Assert.assertEquals($$(CART_ITEM_COMPONENT).size(),
+                number, "Number of products is invalid");
+    return this;
+    }
 }
-//        if (PRICE.equals(SPECIAL_PRICE)) {$(SPECIAL_PRICE).getText();}
-//                else {$(PRICE).getText();}
