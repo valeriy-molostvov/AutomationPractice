@@ -1,20 +1,22 @@
 package tests;
 
+import models.Account;
 import org.testng.annotations.Test;
 import utils.RetryAnalyzer;
 
 public class AutomationPracticeTest extends BaseTest {
-//    @Test(retryAnalyzer = RetryAnalyzer.class)
-//    public void registration() {
-//        loginPage
-//                .openPage()
-//                .openRegistrationPage("helel@mailinator.com")
-//                .fillRegistrationForm("Ms.","Hell","Yeah","11111",
-//                        20,3,"1996","Hello kitty street, 19","Miami",
-//                        "Florida","12345","United States",
-//                        "Hate women clothes","99129045","Miami Beach")
-//                .submitRegistration();
-//    }
+    @Test(retryAnalyzer = RetryAnalyzer.class)
+    public void registration() {
+        Account account = new Account("Mrs.","Hell","Yeah","11111",
+                20,3,"1996","Hello kitty street, 19","Miami",
+                "Florida","12345","United States",
+                "Hate women clothes","99129045","Miami Beach");
+        loginPage
+                .openPage()
+                .openRegistrationPage("hellyeah@mailinator.com")
+                .fillRegistrationForm(account)
+                .submitRegistration();
+    }
 
     @Test(retryAnalyzer = RetryAnalyzer.class)
     public void login() {

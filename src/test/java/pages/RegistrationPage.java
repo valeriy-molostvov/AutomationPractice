@@ -1,6 +1,7 @@
 package pages;
 
 import com.codeborne.selenide.Condition;
+import models.Account;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
@@ -37,33 +38,28 @@ public class RegistrationPage extends BasePage {
         return this;
     }
 
-    public RegistrationPage fillRegistrationForm
-            (String gender, String first_name, String last_name, String password, int day, int month,
-             String year, String address, String city, String state, String zip_code, String country,
-             String additional_information, String mobile_phone, String address_alias) {
+    public RegistrationPage fillRegistrationForm(Account account) {
         isPageOpened();
-        String Ms = "Ms.";
-
-        if (!gender.equals(Ms)) {
+        if (!account.getGender().equals("Mr.")) {
             $(GENDER_FEMALE).click();
         } else {
             $(GENDER_MALE).click();
         }
-        $(FIRST_NAME).sendKeys(first_name);
-        $(LAST_NAME).sendKeys(last_name);
-        $(PASSWORD).setValue(password);
-        $(DATE_OF_BIRTH_DAYS).selectOption(day);
-        $(DATE_OF_BIRTH_MONTHS).selectOption(month);
-        $(DATE_OF_BIRTH_YEARS).selectOptionByValue(year);
-        $(ADDRESS).sendKeys(address);
-        $(CITY).sendKeys(city);
-        $(STATE).selectOptionContainingText(state);
-        $(ZIP_CODE).sendKeys(zip_code);
-        $(COUNTRY).selectOption(country);
-        $(ADDITIONAL_INFORMATION).sendKeys(additional_information);
-        $(MOBILE_PHONE).sendKeys(mobile_phone);
+        $(FIRST_NAME).sendKeys(account.getFirst_name());
+        $(LAST_NAME).sendKeys(account.getLast_name());
+        $(PASSWORD).setValue(account.getPassword());
+        $(DATE_OF_BIRTH_DAYS).selectOption(account.getDay());
+        $(DATE_OF_BIRTH_MONTHS).selectOption(account.getMonth());
+        $(DATE_OF_BIRTH_YEARS).selectOptionByValue(account.getYear());
+        $(ADDRESS).sendKeys(account.getAddress());
+        $(CITY).sendKeys(account.getCity());
+        $(STATE).selectOptionContainingText(account.getState());
+        $(ZIP_CODE).sendKeys(account.getZip_code());
+        $(COUNTRY).selectOption(account.getCountry());
+        $(ADDITIONAL_INFORMATION).sendKeys(account.getAdditional_information());
+        $(MOBILE_PHONE).sendKeys(account.getMobile_phone());
         $(ADDRESS_ALIAS).clear();
-        $(ADDRESS_ALIAS).sendKeys(address_alias);
+        $(ADDRESS_ALIAS).sendKeys(account.getAddress_alias());
         return this;
     }
 

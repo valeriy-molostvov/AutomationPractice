@@ -1,26 +1,11 @@
-package utils;
+package models;
 
-import lombok.Builder;
-
-
-@Builder(toBuilder = true)
-public class BuilderRegistration {
-    public String gender;
-    private String first_name;
-    private String last_name;
-    private String password;
-    private int day;
-    private int month;
-    private String year;
-    private String address;
-    private String city;
-    private String state;
-    private String zip_code;
-    private String country;
-    private String additional_information;
-    private String mobile_phone;
-    private String address_alias;
-    public BuilderRegistration(String gender, String first_name, String last_name, String password, int day, int month, String year, String address, String city, String state, String zip_code, String country, String additional_information, String mobile_phone, String address_alias) {
+public class Account {
+    public Account(String gender, String first_name, String last_name,
+                   String password, int day, int month, String year,
+                   String address, String city, String state, String zip_code,
+                   String country, String additional_information, String mobile_phone,
+                   String address_alias) {
         this.gender = gender;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -157,23 +142,20 @@ public class BuilderRegistration {
     public void setAddress_alias(String address_alias) {
         this.address_alias = address_alias;
     }
+
+    private String gender;
+    private String first_name;
+    private String last_name;
+    private String password;
+    private int day;
+    private int month;
+    private String year;
+    private String address;
+    private String city;
+    private String state;
+    private String zip_code;
+    private String country;
+    private String additional_information;
+    private String mobile_phone;
+    private String address_alias;
 }
-
-
-//        BuilderRegistration.builder()
-//        .gender("Ms.")
-//        .first_name("Hell")
-//        .last_name("Yeah")
-//        .password("11111")
-//        .day(20)
-//        .month(3)
-//        .year("1996")
-//        .address("Hello kitty street, 19")
-//        .city("Miami")
-//        .state("Florida")
-//        .zip_code("12345")
-//        .country("United States")
-//        .additional_information("Hate women clothes")
-//        .mobile_phone("99129045")
-//        .address_alias("Miami Beach")
-//        .build()
