@@ -15,6 +15,7 @@ public class BaseTest {
     CartPage cartPage;
     MyWishlistPage myWishlistPage;
     RegistrationPage registrationPage;
+    MyAccountPage myAccountPage;
 
     @BeforeMethod(description = "Opening Chrome browser")
     public void setupBrowser() {
@@ -28,6 +29,7 @@ public class BaseTest {
         cartPage = new CartPage();
         myWishlistPage = new MyWishlistPage();
         registrationPage = new RegistrationPage();
+        myAccountPage = new MyAccountPage();
     }
 
     @AfterMethod(alwaysRun = true)

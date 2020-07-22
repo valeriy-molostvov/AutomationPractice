@@ -10,6 +10,7 @@ public class MyAccountPage extends BasePage {
     private final static String URL = "http://automationpractice.com/index.php?controller=my-account";
     private final static By ORDER_HISTORY_AND_DETAILS = By.className("icon-list-ol");
     private final static By MY_WISHLIST = By.className("icon-heart");
+    private final static String LOG_OUT = ".logout";
 
     public MyAccountPage openPage() {
         open(URL);
@@ -36,5 +37,13 @@ public class MyAccountPage extends BasePage {
         MyWishlistPage myWishlistPage = new MyWishlistPage();
         myWishlistPage.isPageOpened();
         return myWishlistPage;
+    }
+
+    public LoginPage logoutFromAccount() {
+        isPageOpened();
+        $(LOG_OUT).click();
+        LoginPage loginPage = new LoginPage();
+        loginPage.isPageOpened();
+        return loginPage;
     }
 }

@@ -34,16 +34,30 @@ public class AutomationPracticeTest extends BaseTest {
     }
 
     @Test(retryAnalyzer = RetryAnalyzer.class)
+    public void logOutTest() {
+        loginPage
+                .openPage()
+                .loggingToAccount(account)
+                .isPageOpened();
+        myAccountPage
+                .logoutFromAccount()
+                .isPageOpened();
+    }
+
+    @Test(retryAnalyzer = RetryAnalyzer.class)
     public void addToCartTest() {
         inventoryPage
                 .openPage()
                 .listViewOfProducts()
                 .initializeAllProducts()
                 .addToCart("Printed Summer Dress $28.98")
+                .verifyProductAddedToCart()
                 .continueShopping()
                 .addToCart("Faded Short Sleeve T-shirts $16.51")
+                .verifyProductAddedToCart()
                 .continueShopping()
                 .addToCart("Printed Dress $26.00")
+                .verifyProductAddedToCart()
                 .proceedToCheckout()
                 .initializeAllProductsInCart()
                 .setQuantityValue("Printed Summer Dress $28.98", "10");
@@ -53,16 +67,20 @@ public class AutomationPracticeTest extends BaseTest {
     public void buyingProductTest() {
         loginPage
                 .openPage()
-                .loggingToAccount(account);
+                .loggingToAccount(account)
+                .isPageOpened();
         inventoryPage
                 .openPage()
                 .listViewOfProducts()
                 .initializeAllProducts()
                 .addToCart("Blouse $27.00")
+                .verifyProductAddedToCart()
                 .continueShopping()
                 .addToCart("Faded Short Sleeve T-shirts $16.51")
+                .verifyProductAddedToCart()
                 .continueShopping()
                 .addToCart("Printed Dress $26.00")
+                .verifyProductAddedToCart()
                 .proceedToCheckout();
         cartPage
                 .isPageOpened()
