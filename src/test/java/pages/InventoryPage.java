@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 import static com.codeborne.selenide.Selenide.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 public class InventoryPage extends BasePage {
     private final static String URL = "http://automationpractice.com/index.php?id_category=3&controller=category";
@@ -23,6 +25,8 @@ public class InventoryPage extends BasePage {
     private final static String ITEM_WISHLIST = ".wishlist";
     private final static String DELETE_ITEM_FROM_CART = ".ajax_cart_block_remove_link";
     private final static String CLOSE_WISHLIST_POP_UP = ".fancybox-close";
+    private final static By PRODUCT_VALIDATION_BY_TEXT = By.xpath("//div[@class='clearfix']//i[@class='icon-ok']/..");
+    private final static By PRODUCT_VALIDATION_BY_ICON = By.xpath("//div[@class='clearfix']//i[@class='icon-ok']");
     Map<String, ProductComponent> productComponent = new HashMap<>();
 
     public InventoryPage openPage() {
@@ -88,6 +92,12 @@ public class InventoryPage extends BasePage {
     public InventoryPage listViewOfProducts() {
         isPageOpened();
         $(SORT_LIST).click();
+        return this;
+    }
+    public InventoryPage verifyProductAddedToCart() {
+        assertTrue($(PRODUCT_VALIDATION_BY_ICON).waitUntil(Condition.visible, 20000).isDisplayed(), "No icon is displayed");
+        assertTrue($(PRODUCT_VALIDATION_BY_TEXT).waitUntil(Condition.visible, 20000).isDisplayed(), "No text is displayed");
+        assertEquals($(PRODUCT_VALIDATION_BY_TEXT).getText(), "Product successfully added to your shopping cart", "Message is not correct");
         return this;
     }
 }
