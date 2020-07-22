@@ -43,5 +43,4 @@ public class LoginPage extends BasePage {
         myAccountPage.isPageOpened();
         return myAccountPage;
     }
-
 }

@@ -34,6 +34,17 @@ public class AutomationPracticeTest extends BaseTest {
     }
 
     @Test(retryAnalyzer = RetryAnalyzer.class)
+    public void logOutTest() {
+        loginPage
+                .openPage()
+                .loggingToAccount(account)
+                .isPageOpened();
+        myAccountPage
+                .logoutFromAccount()
+                .isPageOpened();
+    }
+
+    @Test(retryAnalyzer = RetryAnalyzer.class)
     public void addToCartTest() {
         inventoryPage
                 .openPage()
@@ -53,7 +64,8 @@ public class AutomationPracticeTest extends BaseTest {
     public void buyingProductTest() {
         loginPage
                 .openPage()
-                .loggingToAccount(account);
+                .loggingToAccount(account)
+                .isPageOpened();
         inventoryPage
                 .openPage()
                 .listViewOfProducts()
