@@ -2,6 +2,7 @@ package pages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import models.CartComponent;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 
@@ -13,22 +14,21 @@ import static com.codeborne.selenide.Condition.checked;
 import static com.codeborne.selenide.Selenide.*;
 
 public class CartPage extends BasePage {
-    String URL = "http://automationpractice.com/index.php?controller=order";
-    String CART_ITEM_COMPONENT = ".cart_item";
-    String CART_ITEM_NAME = "//td[@class='cart_product']//img";
-    String CART_ITEM_PRICE = "//span[@class='price']/span[@class='price'] | //span[@class='price']/span[@class='price special-price']";
-    String CART_ITEM_DESCRIPTION = "//td[@class='cart_description']//p[@class='product-name']";
-    String CART_ITEM_QUANTITY = ".cart_quantity_input";
-    String CART_ITEM_DELETE = ".icon-trash";
-    String TERMS_OF_SERVICE = "#cgv";
-    String PAY_BY_BANK_WIRE = ".bankwire";
-    String PAY_BY_CHEQUE = ".cheque";
-    String OTHER_PAYMENT_METHOD = ".button-exclusive";
-    String ORDER_CONFIRMATION = ".box";
-    String PROCEED_TO_CHECKOUT_SUMMARY = ".standard-checkout";
-    By PROCEED_TO_CHECKOUT_ADDRESS = By.name("processAddress");
-    By PROCEED_TO_CHECKOUT_SHIPPING = By.name("processCarrier");
-    By PROCEED_TO_CHECKOUT_PAYMENT = By.xpath("//*[@class='button btn btn-default button-medium']");
+    private final static String URL = "http://automationpractice.com/index.php?controller=order";
+    private final static String CART_ITEM_COMPONENT = ".cart_item";
+    private final static String CART_ITEM_NAME = "//td[@class='cart_product']//img";
+    private final static String CART_ITEM_PRICE = "//span[@class='price']/span[@class='price'] | //span[@class='price']/span[@class='price special-price']";
+    private final static String CART_ITEM_DESCRIPTION = "//td[@class='cart_description']//p[@class='product-name']";
+    private final static String CART_ITEM_QUANTITY = ".cart_quantity_input";
+    private final static String CART_ITEM_DELETE = ".icon-trash";
+    private final static String TERMS_OF_SERVICE = "#cgv";
+    private final static String PAY_BY_BANK_WIRE = ".bankwire";
+    private final static String PAY_BY_CHEQUE = ".cheque";
+    private final static String ORDER_CONFIRMATION = ".alert alert-success";
+    private final static String PROCEED_TO_CHECKOUT_SUMMARY = ".standard-checkout";
+    private final static By PROCEED_TO_CHECKOUT_ADDRESS = By.name("processAddress");
+    private final static By PROCEED_TO_CHECKOUT_SHIPPING = By.name("processCarrier");
+    private final static By PROCEED_TO_CHECKOUT_PAYMENT = By.xpath("//*[@class='button btn btn-default button-medium']");
     Map<String, CartComponent> cartComponent = new HashMap<>();
 
     public CartPage openPage() {
@@ -71,7 +71,7 @@ public class CartPage extends BasePage {
         return this;
     }
 
-    public CartPage validateCheckoutAndConfirm() {
+    public CartPage checkoutAndConfirm() {
         isPageOpened();
         $(PROCEED_TO_CHECKOUT_SUMMARY).click();
         $(PROCEED_TO_CHECKOUT_ADDRESS).click();
@@ -86,6 +86,6 @@ public class CartPage extends BasePage {
     public CartPage validateNumberOfProducts(int number) {
         Assert.assertEquals($$(CART_ITEM_COMPONENT).size(),
                 number, "Number of products is invalid");
-    return this;
+        return this;
     }
 }

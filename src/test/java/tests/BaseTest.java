@@ -4,10 +4,7 @@ import com.codeborne.selenide.Configuration;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
-import pages.CartPage;
-import pages.InventoryPage;
-import pages.LoginPage;
-import pages.MyWishlistPage;
+import pages.*;
 
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
@@ -17,6 +14,7 @@ public class BaseTest {
     InventoryPage inventoryPage;
     CartPage cartPage;
     MyWishlistPage myWishlistPage;
+    RegistrationPage registrationPage;
 
     @BeforeMethod(description = "Opening Chrome browser")
     public void setupBrowser() {
@@ -29,6 +27,7 @@ public class BaseTest {
         inventoryPage = new InventoryPage();
         cartPage = new CartPage();
         myWishlistPage = new MyWishlistPage();
+        registrationPage = new RegistrationPage();
     }
 
     @AfterMethod(alwaysRun = true)
