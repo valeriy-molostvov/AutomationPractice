@@ -3,6 +3,7 @@ package pages;
 import com.codeborne.selenide.Condition;
 import models.AccountCreation;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
@@ -26,6 +27,7 @@ public class RegistrationPage extends BasePage {
     private final static By MOBILE_PHONE = By.id("phone_mobile");
     private final static By ADDRESS_ALIAS = By.id("alias");
     private final static By SUBMIT_REGISTRATION = By.id("submitAccount");
+    private final static By ERROR_MESSAGE = By.id("create_account_error");
 
     public RegistrationPage openPage() {
         open(URL);
@@ -63,8 +65,16 @@ public class RegistrationPage extends BasePage {
         return this;
     }
 
-    public void submitRegistration() {
+    public MyAccountPage submitRegistration() {
         isPageOpened();
         $(SUBMIT_REGISTRATION).click();
+        MyAccountPage myAccountPage = new MyAccountPage();
+        myAccountPage.isPageOpened();
+        return myAccountPage;
+    }
+
+    public LoginPage errorAccountCreation(String expectedErrorMessage){
+        Assert.assertEquals($(ERROR_MESSAGE).getText(), expectedErrorMessage, "Error message is not displayed");
+        return new LoginPage();
     }
 }
