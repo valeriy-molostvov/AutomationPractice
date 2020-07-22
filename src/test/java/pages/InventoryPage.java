@@ -16,18 +16,14 @@ public class InventoryPage extends BasePage {
     By CART_LAYER = By.id("layer_cart");
     String ITEM_COMPONENT = ".product-container";
     String ITEM_ADD_TO_CART = ".ajax_add_to_cart_button";
-    String ITEM_NAME = "//a[@class='product-name'][contains(text(),'%s')]";
-    String ITEM_PRICE = "//span[@class='price product-price'][contains(text(),'%s')]";
+    String ITEM_NAME = "//ul[@class='product_list row list']//a[@class='product-name']";
+    String ITEM_PRICE = "//div[@class='right-block-content row']//span[@class='price product-price']";
     String ITEM_MORE = ".lnk_view";
     String ITEM_WISHLIST = ".wishlist";
     String DELETE_ITEM_FROM_CART = ".ajax_cart_block_remove_link";
+    String VALIDATE_POP_UP_AFTER_CLICKING_ON_WISHLIST = ".fancybox-skin";
+    String CLOSE_WISHLIST_POP_UP = ".fancybox-close";
     Map<String, ProductComponent> productComponent = new HashMap<>();
-    List<SelenideElement> productComponentRow = $$(ITEM_COMPONENT);
-    List<SelenideElement> productNames = $$(By.xpath(ITEM_NAME));
-    List<SelenideElement> productPrices = $$(By.xpath(ITEM_PRICE));
-    List<SelenideElement> productAddToCart = $$(ITEM_ADD_TO_CART);
-    List<SelenideElement> productMore = $$(ITEM_MORE);
-    List<SelenideElement> productWishlist = $$(ITEM_WISHLIST);
 
     public InventoryPage openPage() {
         open(URL);
@@ -41,21 +37,36 @@ public class InventoryPage extends BasePage {
     }
 
     public InventoryPage initializeAllProducts() {
-        for (int i = 0; i < $$(productComponentRow).size(); i++) {
-            productComponent.put($$(productNames).get(i).getText(),
+        List<SelenideElement> productsName = $$(By.xpath(ITEM_NAME));
+        List<SelenideElement> productsPrices = $$(By.xpath(ITEM_PRICE));
+        List<SelenideElement> productAddToCart = $$(ITEM_ADD_TO_CART);
+        List<SelenideElement> productMore = $$(ITEM_MORE);
+        List<SelenideElement> productWishlist = $$(ITEM_WISHLIST);
+        for (int i = 0; i < $$(ITEM_COMPONENT).size(); i++) {
+            productComponent.put(productsName.get(i).getText() + " " + productsPrices.get(i).getText(),
                     new ProductComponent(
-                            productNames.get(i),
-                            productPrices.get(i),
+                            productsPrices.get(i),
+                            productsName.get(i),
                             productAddToCart.get(i),
                             productMore.get(i),
-                            productWishlist.get(i)
-                    ));
+                            productWishlist.get(i)));
         }
         return this;
     }
 
-    public InventoryPage addToCart(String productName) {
-        productComponent.get(productName).addToCart.click();
+    public InventoryPage addToCart(String productNameAndPrice) {
+        productComponent.get(productNameAndPrice).addToCart.click();
+        return this;
+    }
+
+    public InventoryPage addToWishlist(String productPrice) {
+        productComponent.get(productPrice).addToWishlist.click();
+        $(CLOSE_WISHLIST_POP_UP).click();
+        return this;
+    }
+
+    public InventoryPage clickMore(String productPrice) {
+        productComponent.get(productPrice).more.click();
         return this;
     }
 

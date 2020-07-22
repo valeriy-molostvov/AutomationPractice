@@ -1,19 +1,35 @@
 package pages;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static com.codeborne.selenide.Condition.checked;
 import static com.codeborne.selenide.Selenide.*;
 
 public class CartPage extends BasePage {
-
     String URL = "http://automationpractice.com/index.php?controller=order";
-    String DELETE_FROM_CART = "//tr[%s]//a[@class='cart_quantity_delete']";
-    String INCREASE_QUANTITY = "//tr[%s]//a[@class='cart_quantity_up btn btn-default button-plus']";
-    String DECREASE_QUANTITY = "//tr[%s]//a[@class='cart_quantity_down btn btn-default button-minus']";
-    String QUANTITY = "//tr[%s]//input[@class='cart_quantity_input form-control grey']";
-    String Price = "#total_price";
+    String CART_ITEM_COMPONENT = ".cart_item";
+    String CART_ITEM_NAME = "//td[@class='cart_product']//img";
+    String CART_ITEM_PRICE = "//span[@class='price']/span[@class='price'] | //span[@class='price']/span[@class='price special-price']";
+    String CART_ITEM_DESCRIPTION = "//td[@class='cart_description']//p[@class='product-name']";
+    String CART_ITEM_QUANTITY = ".cart_quantity_input";
+    String CART_ITEM_DELETE = ".icon-trash";
+    String TERMS_OF_SERVICE = "#cgv";
+    String PAY_BY_BANK_WIRE = ".bankwire";
+    String PAY_BY_CHEQUE = ".cheque";
+    String OTHER_PAYMENT_METHOD = ".button-exclusive";
+    String ORDER_CONFIRMATION = ".box";
+    String PROCEED_TO_CHECKOUT_SUMMARY = ".standard-checkout";
+    By PROCEED_TO_CHECKOUT_ADDRESS = By.name("processAddress");
+    By PROCEED_TO_CHECKOUT_SHIPPING = By.name("processCarrier");
+    By PROCEED_TO_CHECKOUT_PAYMENT = By.xpath("//*[@class='button btn btn-default button-medium']");
+    Map<String, CartComponent> cartComponent = new HashMap<>();
 
     public CartPage openPage() {
         open(URL);
@@ -25,21 +41,51 @@ public class CartPage extends BasePage {
         $(PAGE_VALIDATION).waitUntil(Condition.visible, 30000);
         return this;
     }
-    public CartPage deleteFromCart(int delete, int quantityIncrease, int quantityDecrease, String quantitySetValue, int quantity) {
-        By increaseQuantity = By.xpath(String.format(INCREASE_QUANTITY, quantityIncrease));
-        By decreaseQuantity = By.xpath(String.format(DECREASE_QUANTITY, quantityDecrease));
-        By quantityValue = By.xpath(String.format(QUANTITY, quantity));
-        $(quantityValue).setValue(quantitySetValue);
-        $(decreaseQuantity).click();
-        $(increaseQuantity).doubleClick();
-        By deleteFromCart = By.xpath(String.format(DELETE_FROM_CART, delete));
-        $(deleteFromCart).shouldBe(Condition.visible).click();
+
+    public CartPage initializeAllProductsInCart() {
+        List<SelenideElement> cartProductsName = $$(By.xpath(CART_ITEM_NAME));
+        List<SelenideElement> cartProductPrices = $$(By.xpath(CART_ITEM_PRICE));
+        List<SelenideElement> cartDescriptions = $$(By.xpath(CART_ITEM_DESCRIPTION));
+        List<SelenideElement> cartQuantities = $$(CART_ITEM_QUANTITY);
+        List<SelenideElement> cartDeletes = $$(CART_ITEM_DELETE);
+        for (int i = 0; i < $$(CART_ITEM_COMPONENT).size(); i++) {
+            cartComponent.put(cartDescriptions.get(i).getText() + " " + cartProductPrices.get(i).getText(),
+                    new CartComponent(
+                            cartDescriptions.get(i),
+                            cartProductsName.get(i),
+                            cartProductPrices.get(i),
+                            cartQuantities.get(i),
+                            cartDeletes.get(i)));
+        }
         return this;
     }
-    public CheckoutPage proceedToCheckout() {
-        $(PROCEED_TO_CHECKOUT).click();
-        CheckoutPage checkoutPage = new CheckoutPage();
-        checkoutPage.isPageOpened();
-        return checkoutPage;
+
+    public CartPage setQuantityValue(String productNameAndPrice, String setQuantityValue) {
+        cartComponent.get(productNameAndPrice).quantity.setValue(setQuantityValue);
+        return this;
+    }
+
+    public CartPage deleteFromCart(String productNameAndPrice) {
+        cartComponent.get(productNameAndPrice).delete.click();
+        initializeAllProductsInCart();
+        return this;
+    }
+
+    public CartPage validateCheckoutAndConfirm() {
+        isPageOpened();
+        $(PROCEED_TO_CHECKOUT_SUMMARY).click();
+        $(PROCEED_TO_CHECKOUT_ADDRESS).click();
+        $(TERMS_OF_SERVICE).click();
+        $(TERMS_OF_SERVICE).shouldBe(checked);
+        $(PROCEED_TO_CHECKOUT_SHIPPING).click();
+        $(PAY_BY_BANK_WIRE).click();
+        $(PROCEED_TO_CHECKOUT_PAYMENT).click();
+        return this;
+    }
+
+    public CartPage validateNumberOfProducts(int number) {
+        Assert.assertEquals($$(CART_ITEM_COMPONENT).size(),
+                number, "Number of products is invalid");
+    return this;
     }
 }

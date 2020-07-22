@@ -7,7 +7,6 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
 public class RegistrationPage extends BasePage {
-
     String URL = "http://automationpractice.com/index.php?controller=authentication&back=my-account#account-creation";
     By GENDER_MALE = By.id("id_gender1");
     By GENDER_FEMALE = By.id("id_gender2");
@@ -27,7 +26,6 @@ public class RegistrationPage extends BasePage {
     By ADDRESS_ALIAS = By.id("alias");
     By SUBMIT_REGISTRATION = By.id("submitAccount");
 
-
     public RegistrationPage openPage() {
         open(URL);
         isPageOpened();
@@ -39,16 +37,18 @@ public class RegistrationPage extends BasePage {
         return this;
     }
 
-    public RegistrationPage fillRegistrationForm( String gender,
-            String first_name, String last_name, String password, int day, int month,
-            String year, String address, String city, String state, String zip_code, String country,
-            String additional_information, String mobile_phone, String address_alias) {
-
+    public RegistrationPage fillRegistrationForm
+            (String gender, String first_name, String last_name, String password, int day, int month,
+             String year, String address, String city, String state, String zip_code, String country,
+             String additional_information, String mobile_phone, String address_alias) {
         isPageOpened();
         String Ms = "Ms.";
 
-        if (!gender.equals(Ms)) {$(GENDER_FEMALE).click();}
-        else {$(GENDER_MALE).click();}
+        if (!gender.equals(Ms)) {
+            $(GENDER_FEMALE).click();
+        } else {
+            $(GENDER_MALE).click();
+        }
         $(FIRST_NAME).sendKeys(first_name);
         $(LAST_NAME).sendKeys(last_name);
         $(PASSWORD).setValue(password);
