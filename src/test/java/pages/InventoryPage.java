@@ -2,6 +2,7 @@ package pages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import models.ProductComponent;
 import org.openqa.selenium.By;
 
 import java.util.HashMap;
@@ -11,18 +12,17 @@ import java.util.Map;
 import static com.codeborne.selenide.Selenide.*;
 
 public class InventoryPage extends BasePage {
-    String URL = "http://automationpractice.com/index.php?id_category=3&controller=category";
-    By SORT_LIST = By.className("icon-th-list");
-    By CART_LAYER = By.id("layer_cart");
-    String ITEM_COMPONENT = ".product-container";
-    String ITEM_ADD_TO_CART = ".ajax_add_to_cart_button";
-    String ITEM_NAME = "//ul[@class='product_list row list']//a[@class='product-name']";
-    String ITEM_PRICE = "//div[@class='right-block-content row']//span[@class='price product-price']";
-    String ITEM_MORE = ".lnk_view";
-    String ITEM_WISHLIST = ".wishlist";
-    String DELETE_ITEM_FROM_CART = ".ajax_cart_block_remove_link";
-    String VALIDATE_POP_UP_AFTER_CLICKING_ON_WISHLIST = ".fancybox-skin";
-    String CLOSE_WISHLIST_POP_UP = ".fancybox-close";
+    private final static String URL = "http://automationpractice.com/index.php?id_category=3&controller=category";
+    private final static By SORT_LIST = By.className("icon-th-list");
+    private final static By CART_LAYER = By.id("layer_cart");
+    private final static String ITEM_COMPONENT = ".product-container";
+    private final static String ITEM_ADD_TO_CART = ".ajax_add_to_cart_button";
+    private final static String ITEM_NAME = "//ul[@class='product_list row list']//a[@class='product-name']";
+    private final static String ITEM_PRICE = "//div[@class='right-block-content row']//span[@class='price product-price']";
+    private final static String ITEM_MORE = ".lnk_view";
+    private final static String ITEM_WISHLIST = ".wishlist";
+    private final static String DELETE_ITEM_FROM_CART = ".ajax_cart_block_remove_link";
+    private final static String CLOSE_WISHLIST_POP_UP = ".fancybox-close";
     Map<String, ProductComponent> productComponent = new HashMap<>();
 
     public InventoryPage openPage() {

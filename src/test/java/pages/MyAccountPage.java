@@ -7,9 +7,9 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
 public class MyAccountPage extends BasePage {
-    String URL = "http://automationpractice.com/index.php?controller=my-account";
-    By ORDER_HISTORY_AND_DETAILS = By.className("icon-list-ol");
-    By MY_WISHLIST = By.className("icon-heart");
+    private final static String URL = "http://automationpractice.com/index.php?controller=my-account";
+    private final static By ORDER_HISTORY_AND_DETAILS = By.className("icon-list-ol");
+    private final static By MY_WISHLIST = By.className("icon-heart");
 
     public MyAccountPage openPage() {
         open(URL);

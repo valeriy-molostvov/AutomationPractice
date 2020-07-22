@@ -1,18 +1,23 @@
 package pages;
 
 import com.codeborne.selenide.Condition;
+import models.Account;
+import models.ProductComponent;
 import org.openqa.selenium.By;
+import utils.RandomEmailGenerator;
 
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.codeborne.selenide.Selenide.*;
 
 public class LoginPage extends BasePage {
-    String URL = "http://automationpractice.com/index.php?controller=authentication&back=my-account";
-    By EMAIL_ADDRESS = By.id("email_create");
-    By CREATE_ACCOUNT_BUTTON = By.id("SubmitCreate");
-    By LOGIN = By.id("email");
-    By PASSWORD = By.id("passwd");
-    By SIGN_IN = By.id("SubmitLogin");
+    private final static String URL = "http://automationpractice.com/index.php?controller=authentication&back=my-account";
+    private final static By EMAIL_ADDRESS = By.id("email_create");
+    private final static By CREATE_ACCOUNT_BUTTON = By.id("SubmitCreate");
+    private final static By LOGIN = By.id("email");
+    private final static By PASSWORD = By.id("passwd");
+    private final static By SIGN_IN = By.id("SubmitLogin");
 
     public LoginPage openPage() {
         open(URL);
@@ -34,10 +39,10 @@ public class LoginPage extends BasePage {
         return registrationPage;
     }
 
-    public MyAccountPage loggingToAccount(String email, String password) {
+    public MyAccountPage loggingToAccount(Account account) {
         isPageOpened();
-        $(LOGIN).sendKeys(email);
-        $(PASSWORD).sendKeys(password);
+        $(LOGIN).sendKeys(account.getEmail());
+        $(PASSWORD).sendKeys(account.getPassword());
         $(SIGN_IN).click();
         MyAccountPage myAccountPage = new MyAccountPage();
         myAccountPage.isPageOpened();

@@ -1,28 +1,31 @@
 package tests;
 
 import models.Account;
+import models.AccountCreation;
 import org.testng.annotations.Test;
 import utils.RetryAnalyzer;
 
 public class AutomationPracticeTest extends BaseTest {
+    Account account = new Account("moodpanda@mailinator.com", "12345");
+    AccountCreation accountCreation = new AccountCreation("Mr.", "Hell", "Yeah", "11111",
+            20, 3, "1996", "Hello kitty street, 19", "Miami",
+            "Florida", "12345", "United States", "Hate women clothes",
+            "99129045", "Miami Beach");
+
     @Test(retryAnalyzer = RetryAnalyzer.class)
     public void registration() {
-        Account account = new Account("Mrs.","Hell","Yeah","11111",
-                20,3,"1996","Hello kitty street, 19","Miami",
-                "Florida","12345","United States",
-                "Hate women clothes","99129045","Miami Beach");
         loginPage
                 .openPage()
-                .openRegistrationPage("hellyeah@mailinator.com")
-                .fillRegistrationForm(account)
-                .submitRegistration();
+                .openRegistrationPage("mail@mailinator.com")
+                .fillRegistrationForm(accountCreation);
+//                .submitRegistration();
     }
 
     @Test(retryAnalyzer = RetryAnalyzer.class)
     public void login() {
         loginPage
                 .openPage()
-                .loggingToAccount("moodpanda@mailinator.com", "12345");
+                .loggingToAccount(account);
     }
 
     @Test(retryAnalyzer = RetryAnalyzer.class)
@@ -45,7 +48,7 @@ public class AutomationPracticeTest extends BaseTest {
     public void buyingProductTest() {
         loginPage
                 .openPage()
-                .loggingToAccount("moodpanda@mailinator.com", "12345");
+                .loggingToAccount(account);
         inventoryPage
                 .openPage()
                 .listViewOfProducts()
@@ -60,14 +63,14 @@ public class AutomationPracticeTest extends BaseTest {
                 .isPageOpened()
                 .initializeAllProductsInCart()
                 .validateNumberOfProducts(3)
-                .validateCheckoutAndConfirm();
+                .checkoutAndConfirm();
     }
 
     @Test(retryAnalyzer = RetryAnalyzer.class)
     public void wishlistTest() {
         loginPage
                 .openPage()
-                .loggingToAccount("moodpanda@mailinator.com", "12345");
+                .loggingToAccount(account);
         myWishlistPage
                 .openPage()
                 .addNewWishlist("New WishList")

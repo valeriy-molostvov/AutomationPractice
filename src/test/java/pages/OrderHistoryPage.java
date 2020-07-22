@@ -6,7 +6,7 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
 public class OrderHistoryPage extends BasePage {
-    String URL = "http://automationpractice.com/index.php?controller=history";
+    private final static String URL = "http://automationpractice.com/index.php?controller=history";
 
     public OrderHistoryPage openPage() {
         open(URL);
