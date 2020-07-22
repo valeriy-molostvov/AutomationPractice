@@ -5,6 +5,8 @@ import models.AccountCreation;
 import org.testng.annotations.Test;
 import utils.RetryAnalyzer;
 
+import static utils.EmailData.*;
+
 public class AutomationPracticeTest extends BaseTest {
     Account account = new Account("moodpanda@mailinator.com", "12345");
     AccountCreation accountCreation = new AccountCreation("Mr.", "Hell", "Yeah", "11111",
@@ -13,19 +15,22 @@ public class AutomationPracticeTest extends BaseTest {
             "99129045", "Miami Beach");
 
     @Test(retryAnalyzer = RetryAnalyzer.class)
-    public void registration() {
+    public void registrationTest() {
+        String email = createEmail(10,true,true);
         loginPage
                 .openPage()
-                .openRegistrationPage("mail@mailinator.com")
-                .fillRegistrationForm(accountCreation);
-//                .submitRegistration();
+                .openRegistrationPage(email)
+                .fillRegistrationForm(accountCreation)
+                .submitRegistration()
+                .isPageOpened();
     }
 
     @Test(retryAnalyzer = RetryAnalyzer.class)
-    public void login() {
+    public void loginTest() {
         loginPage
                 .openPage()
-                .loggingToAccount(account);
+                .loggingToAccount(account)
+                .isPageOpened();
     }
 
     @Test(retryAnalyzer = RetryAnalyzer.class)

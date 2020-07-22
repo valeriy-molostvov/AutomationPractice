@@ -2,12 +2,7 @@ package pages;
 
 import com.codeborne.selenide.Condition;
 import models.Account;
-import models.ProductComponent;
 import org.openqa.selenium.By;
-import utils.RandomEmailGenerator;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static com.codeborne.selenide.Selenide.*;
 
@@ -48,4 +43,5 @@ public class LoginPage extends BasePage {
         myAccountPage.isPageOpened();
         return myAccountPage;
     }
+
 }
